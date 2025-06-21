@@ -4,6 +4,12 @@ import 'package:shop/route/route_constants.dart';
 
 import 'components/login_form.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../service/api_service.dart';
+import '../../../models/customer_model.dart';
+import '../../home/views/home_screen.dart'; // ganti sesuai nama halaman beranda Anda
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -45,8 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextButton(
                       child: const Text("Forgot password"),
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, passwordRecoveryScreenRoute);
+                        Navigator.pushNamed(context, passwordRecoveryScreenRoute);
                       },
                     ),
                   ),
@@ -55,17 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ? size.height * 0.1
                         : defaultPadding,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            entryPointScreenRoute,
-                            ModalRoute.withName(logInScreenRoute));
-                      }
-                    },
-                    child: const Text("Log in"),
-                  ),
+                  // Tombol login dipindahkan ke dalam LogInForm
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

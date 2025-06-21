@@ -18,7 +18,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
   int _pageIndex = 0;
   final List<Onbord> _onbordData = [
     Onbord(
-      image: "assets/Illustration/Illustration-0.png",
+      image: "assets/Illustration/no_internet.png",
       // imageDarkTheme: "assets/Illustration/Illustration_darkTheme_0.png",
       title: "Lapak Siswa \nWadah penjualan Karya Siswa",
       description:
