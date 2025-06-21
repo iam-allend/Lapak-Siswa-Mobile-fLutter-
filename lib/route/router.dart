@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shop/entry_point.dart';
+import 'package:shop/screens/order/views/order_detail_screen.dart';
+
+import 'package:shop/screens/profile/views/profile_edit_screen.dart'; // Tambahan import
+import 'package:shop/screens/profile/views/profile_view_screen.dart';
+import 'package:shop/screens/order/views/orders_screen.dart';
+import 'package:shop/screens/order/views/order_delivered_screen.dart';
+
 
 import 'screen_export.dart';
 
@@ -244,9 +251,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //     builder: (context) => const AddNewAddressScreen(),
     //   );
     case ordersScreenRoute:
-      return MaterialPageRoute(
-        builder: (context) => const OrdersScreen(),
-      );
+    return MaterialPageRoute(
+    builder: (context) => const OrderScreen(), // ← ini halaman yang kamu buat
+    );
+
     // case orderProcessingScreenRoute:
     //   return MaterialPageRoute(
     //     builder: (context) => const OrderProcessingScreen(),
@@ -287,6 +295,39 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const CartScreen(),
       );
+
+// DIBAWAH INI ROUTE YANG DI BUAT ZIKRY
+
+    // ✅ Tambahkan ini untuk ProfileViewScreen
+    case profileViewScreenRoute:
+      return MaterialPageRoute(
+        builder: (context) => const ProfileViewScreen(),
+      );
+
+      // ✅ Tambahkan ini untuk ProfileEditScreen
+      const String userInfoScreenRoute = "user_info";
+      const String profileEditScreenRoute = "profile_edit"; // ✅ Tambahkan ini
+        case profileEditScreenRoute:
+        return MaterialPageRoute(
+        builder: (context) => const ProfileEditScreen(),
+      );
+
+    // ✅ Tambahkan ini untuk OrderScreen
+    case orderScreenRoute:case 'order_detail':
+      final args = settings.arguments as Map<String, dynamic>;
+      return MaterialPageRoute(
+        builder: (context) => OrderDetailScreen(
+          title: args['title'],
+          items: args['items'],
+        ),
+      );
+
+    // ✅ Tambahkan ini untuk Order Deliveries
+    case deliveredOrdersScreenRoute:
+  return MaterialPageRoute(
+    builder: (context) => const OrderDeliveredScreen(),
+  );
+
     // case paymentMethodScreenRoute:
     //   return MaterialPageRoute(
     //     builder: (context) => const PaymentMethodScreen(),

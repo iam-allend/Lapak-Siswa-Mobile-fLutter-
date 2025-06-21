@@ -47,7 +47,6 @@ const String ordersScreenRoute = "orders";
 const String orderProcessingScreenRoute = "order_processing";
 const String orderDetailsScreenRoute = "order_details";
 const String cancleOrderScreenRoute = "cancle_order";
-const String deliveredOrdersScreenRoute = "delivered_orders";
 const String cancledOrdersScreenRoute = "cancled_orders";
 const String preferencesScreenRoute = "preferences";
 const String emptyPaymentScreenRoute = "empty_payment";
@@ -58,3 +57,10 @@ const String paymentMethodScreenRoute = "payment_method";
 const String addNewCardScreenRoute = "add_new_card";
 const String thanksForOrderScreenRoute = "thanks_order";
 
+// ✅ Tambahkan ini untuk ProfileViewScreen&ProfileEditScreen
+const String profileViewScreenRoute = "profile_view_screen";
+const String profileEditScreenRoute = "profile_edit"; // ✅ Tambahkan ini
+// ✅ Tambahkan ini untuk OrderScreen
+const String orderScreenRoute = "order_screen";
+// ✅ Tambahkan ini untuk Order Deliveries
+const String deliveredOrdersScreenRoute = "delivered_orders";
