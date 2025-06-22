@@ -6,6 +6,7 @@ import 'package:shop/screens/profile/views/profile_edit_screen.dart'; // Tambaha
 import 'package:shop/screens/profile/views/profile_view_screen.dart';
 import 'package:shop/screens/order/views/orders_screen.dart';
 import 'package:shop/screens/order/views/order_delivered_screen.dart';
+import 'package:shop/screens/splash/views/splash_screen.dart';
 
 
 import 'screen_export.dart';
@@ -79,6 +80,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const PreferredLanguageScreen(),
     //   );
+    
+    case '/':
+    return MaterialPageRoute(builder: (_) => const SplashScreen());
+
     case logInScreenRoute:
       return MaterialPageRoute(
         builder: (context) => const LoginScreen(),
