@@ -6,15 +6,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Shoplon"),
-        actions: const [
-          Icon(Icons.search),
-          SizedBox(width: 16),
-          Icon(Icons.notifications_none),
-          SizedBox(width: 16),
-        ],
-      ),
+      
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -64,20 +56,6 @@ class CartScreen extends StatelessWidget {
           const SizedBox(height: 24),
           _orderSummary(),
         ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.grid_view_outlined), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark_border), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: 'Cart'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: ''),
-        ],
-        selectedItemColor: Colors.deepPurple,
-        unselectedItemColor: Colors.black54,
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) {},
       ),
     );
   }
