@@ -1,14 +1,50 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:shop/components/product/product_card.dart';
-import 'package:shop/models/product_model.dart';
+import 'package:shop/constants.dart';
+import 'package:shop/models/product_siswa_model.dart';
 import 'package:shop/route/screen_export.dart';
 
-import '../../../../constants.dart';
+class PopularProducts extends StatefulWidget {
+  const PopularProducts({super.key});
 
-class PopularProducts extends StatelessWidget {
-  const PopularProducts({
-    super.key,
-  });
+  @override
+  State<PopularProducts> createState() => _PopularProductsState();
+}
+
+class _PopularProductsState extends State<PopularProducts> {
+  List<ProductSiswaModel> products = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProductSiswa();
+  }
+
+Future<void> fetchProductSiswa() async {
+  final response = await http.get(Uri.parse("https://allend.site/lapak-siswa/API/get_products_siswa.php"));
+  if (response.statusCode == 200) {
+    final jsonBody = json.decode(response.body);
+    if (jsonBody["success"] == true) {
+      final List list = jsonBody["products"];
+
+      // 🔽 Tambahkan ini untuk debug URL gambar
+      for (var e in list) {
+        print("Gambar URL: ${e['url']}");
+      }
+
+      setState(() {
+        products = list.map((e) => ProductSiswaModel.fromJson(e)).toList();
+      });
+    } else {
+      print("API response success=false");
+    }
+  } else {
+    print("HTTP Error: ${response.statusCode}");
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,40 +55,45 @@ class PopularProducts extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Text(
-            "Popular products",
+            "Produk Siswa",
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
-        // While loading use 👇
-        // const ProductsSkelton(),
         SizedBox(
           height: 220,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            // Find demoPopularProducts on models/ProductModel.dart
-            itemCount: demoPopularProducts.length,
-            itemBuilder: (context, index) => Padding(
-              padding: EdgeInsets.only(
-                left: defaultPadding,
-                right: index == demoPopularProducts.length - 1
-                    ? defaultPadding
-                    : 0,
-              ),
-              child: ProductCard(
-                image: demoPopularProducts[index].image,
-                brandName: demoPopularProducts[index].brandName,
-                title: demoPopularProducts[index].title,
-                price: demoPopularProducts[index].price,
-                priceAfetDiscount: demoPopularProducts[index].priceAfetDiscount,
-                dicountpercent: demoPopularProducts[index].dicountpercent,
-                press: () {
-                  Navigator.pushNamed(context, productDetailsScreenRoute,
-                      arguments: index.isEven);
-                },
-              ),
-            ),
-          ),
-        )
+          child: products.isEmpty
+              ? const Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    final item = products[index];
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        left: defaultPadding,
+                        right: index == products.length - 1 ? defaultPadding : 0,
+                      ),
+                      child: ProductCard(
+                              image: item.image,
+                              brandName: item.brandName,
+                              title: item.title,
+                              price: item.price,
+                              priceAfetDiscount: item.priceAfetDiscount,
+                              dicountpercent: item.dicountpercent,
+                              press: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  productDetailsScreenRoute,
+                                  arguments: item,
+                                );
+                              },
+                            ),
+
+
+                    );
+                  },
+                ),
+        ),
       ],
     );
   }
