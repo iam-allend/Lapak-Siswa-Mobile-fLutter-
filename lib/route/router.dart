@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shop/entry_point.dart';
+import 'package:shop/models/category_model.dart';
 import 'package:shop/screens/address/views/add_new_address_screen.dart';
 import 'package:shop/screens/order/views/order_detail_screen.dart';
 import 'package:shop/screens/preferences/views/select_language_screen.dart';
+import 'package:shop/screens/product/views/category_screen.dart';
 import 'package:shop/screens/profile/views/profile_edit_screen.dart';
 import 'package:shop/screens/profile/views/profile_view_screen.dart';
 import 'package:shop/screens/order/views/orders_screen.dart';
@@ -118,6 +120,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   return MaterialPageRoute(
     builder: (context) => const SelectLanguageScreen(),
   );
+  case 'category_screen':
+  return MaterialPageRoute(
+    builder: (context) => const CategoryScreen(),
+  );
+
+
 
 
       

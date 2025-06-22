@@ -17,16 +17,25 @@ class CategoryModel {
 }
 
 List<CategoryModel> demoCategories = [
-  CategoryModel(name: "All Categories"),
+  CategoryModel(name: "All Categories", route: categoryScreenRoute),
   CategoryModel(
       name: "Produk Kami",
       svgSrc: "assets/icons/Sale.svg",
-      route: onSaleScreenRoute),
-  CategoryModel(name: "Kebersihan", svgSrc: "assets/icons/Man.svg"),
-  CategoryModel(name: "Alat belajar", svgSrc: "assets/icons/Woman.svg"),
+      route: categoryScreenRoute),
   CategoryModel(
-      name: "Kecantikan", svgSrc: "assets/icons/Child.svg", route: kidsScreenRoute),
+      name: "Kebersihan",
+      svgSrc: "assets/icons/Man.svg",
+      route: categoryScreenRoute),
+  CategoryModel(
+      name: "Alat belajar",
+      svgSrc: "assets/icons/Woman.svg",
+      route: categoryScreenRoute),
+  CategoryModel(
+      name: "Kecantikan",
+      svgSrc: "assets/icons/Child.svg",
+      route: categoryScreenRoute),
 ];
+
 // End For Preview
 
 class Categories extends StatelessWidget {
@@ -53,9 +62,16 @@ class Categories extends StatelessWidget {
                 isActive: index == 0,
                 press: () {
                   if (demoCategories[index].route != null) {
-                    Navigator.pushNamed(context, demoCategories[index].route!);
+                    Navigator.pushNamed(
+                      context,
+                      demoCategories[index].route!,
+                      arguments: {
+                        'category': demoCategories[index].name,
+                      },
+                    );
                   }
                 },
+
               ),
             ),
           ),

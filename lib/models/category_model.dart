@@ -20,39 +20,39 @@ final List<CategoryModel> demoCategoriesWithImage = [
 
 final List<CategoryModel> demoCategories = [
   CategoryModel(
-    title: "On sale",
+    title: "All Categories",
     svgSrc: "assets/icons/Sale.svg",
     subCategories: [
       CategoryModel(title: "Semua Produk"),
-      CategoryModel(title: "New In"),
+      CategoryModel(title: "Alat Belajar"),
       CategoryModel(title: "Kebersihan"),
       CategoryModel(title: "Kecantikan"),
     ],
   ),
-  CategoryModel(
-    title: "Man’s & Woman’s",
-    svgSrc: "assets/icons/Man&Woman.svg",
-    subCategories: [
-      CategoryModel(title: "All Clothing"),
-      CategoryModel(title: "New In"),
-      CategoryModel(title: "Coats & Jackets"),
-    ],
-  ),
-  CategoryModel(
-    title: "Kids",
-    svgSrc: "assets/icons/Child.svg",
-    subCategories: [
-      CategoryModel(title: "All Clothing"),
-      CategoryModel(title: "New In"),
-      CategoryModel(title: "Coats & Jackets"),
-    ],
-  ),
-  CategoryModel(
-    title: "Accessories",
-    svgSrc: "assets/icons/Accessories.svg",
-    subCategories: [
-      CategoryModel(title: "All Clothing"),
-      CategoryModel(title: "New In"),
-    ],
-  ),
+  // CategoryModel(
+  //   title: "Man’s & Woman’s",
+  //   svgSrc: "assets/icons/Man&Woman.svg",
+  //   subCategories: [
+  //     CategoryModel(title: "All Clothing"),
+  //     CategoryModel(title: "New In"),
+  //     CategoryModel(title: "Coats & Jackets"),
+  //   ],
+  // ),
+  // CategoryModel(
+  //   title: "Kids",
+  //   svgSrc: "assets/icons/Child.svg",
+  //   subCategories: [
+  //     CategoryModel(title: "All Clothing"),
+  //     CategoryModel(title: "New In"),
+  //     CategoryModel(title: "Coats & Jackets"),
+  //   ],
+  // ),
+  // CategoryModel(
+  //   title: "Accessories",
+  //   svgSrc: "assets/icons/Accessories.svg",
+  //   subCategories: [
+  //     CategoryModel(title: "All Clothing"),
+  //     CategoryModel(title: "New In"),
+  //   ],
+  // ),
 ];
