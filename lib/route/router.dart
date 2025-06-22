@@ -22,7 +22,7 @@ const String wishlistScreenRoute = "wishlist";
 const String userInfoScreenRoute = "user_info";
 const String paymentScreenRoute = "payment_screen";
 
-Route<dynamic> generateRoute(RouteSettings settings) {
+Object generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case onbordingScreenRoute:
       return MaterialPageRoute(builder: (context) => const OnBordingScreen());
@@ -118,14 +118,17 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const PaymentScreen(),
       );
-      case selectLanguageScreenRoute:
-  return MaterialPageRoute(
-    builder: (context) => const SelectLanguageScreen(),
-  );
-  case 'category_screen':
-  return MaterialPageRoute(
-    builder: (context) => const CategoryScreen(),
-  );
+    case selectLanguageScreenRoute:
+        return MaterialPageRoute(
+        builder: (context) => const SelectLanguageScreen(),
+      );
+    case 'category_screen':
+        return MaterialPageRoute(
+        builder: (context) => const CategoryScreen(),
+      );
+      case cartScreenRoute:
+        return const CartScreen();
+
 
 
 

@@ -31,5 +31,7 @@ export '/screens/user_info/views/user_info_screen.dart';
 const String addNewAddressesScreenRoute = "add_new_address";
 const String selectLanguageScreenRoute = "select_language";
 const String categoryScreenRoute = 'category_screen';
+const cartScreenRoute = "/cart";
+
 
 
