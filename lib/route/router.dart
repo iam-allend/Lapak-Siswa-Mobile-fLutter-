@@ -11,6 +11,7 @@ import 'package:shop/screens/order/views/orders_screen.dart';
 import 'package:shop/screens/order/views/order_delivered_screen.dart';
 import 'package:shop/screens/order/views/wishlist_screen.dart';
 import 'package:shop/screens/splash/views/splash_screen.dart';
+import 'package:shop/models/product_siswa_model.dart';
 import 'screen_export.dart';
 import 'package:shop/screens/payment/views/payment_screen.dart';
 
@@ -42,12 +43,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case passwordRecoveryScreenRoute:
       return MaterialPageRoute(builder: (context) => const PasswordRecoveryScreen());
     case productDetailsScreenRoute:
-      return MaterialPageRoute(
-        builder: (context) {
-          bool isProductAvailable = settings.arguments as bool? ?? true;
-          return ProductDetailsScreen(isProductAvailable: isProductAvailable);
-        },
-      );
+    return MaterialPageRoute(
+      builder: (context) {
+        final product = settings.arguments as ProductSiswaModel;
+        return ProductDetailsScreen(product: product);
+      },
+    );
+
     case productReviewsScreenRoute:
       return MaterialPageRoute(builder: (context) => const ProductReviewsScreen());
     case homeScreenRoute:
