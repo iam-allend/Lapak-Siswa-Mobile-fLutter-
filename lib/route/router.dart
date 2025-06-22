@@ -7,6 +7,8 @@ import 'package:shop/screens/profile/views/profile_view_screen.dart';
 import 'package:shop/screens/order/views/orders_screen.dart';
 import 'package:shop/screens/order/views/order_delivered_screen.dart';
 import 'package:shop/screens/splash/views/splash_screen.dart';
+import 'package:shop/models/product_siswa_model.dart';
+
 
 
 import 'screen_export.dart';
@@ -141,12 +143,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //     builder: (context) => const SetupFaceIdScreen(),
     //   );
     case productDetailsScreenRoute:
-      return MaterialPageRoute(
-        builder: (context) {
-          bool isProductAvailable = settings.arguments as bool? ?? true;
-          return ProductDetailsScreen(isProductAvailable: isProductAvailable);
-        },
-      );
+    return MaterialPageRoute(
+      builder: (context) {
+        final product = settings.arguments as ProductSiswaModel;
+        return ProductDetailsScreen(product: product);
+      },
+    );
+
     case productReviewsScreenRoute:
       return MaterialPageRoute(
         builder: (context) => const ProductReviewsScreen(),

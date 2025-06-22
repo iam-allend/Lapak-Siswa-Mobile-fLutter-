@@ -5,8 +5,7 @@ import 'package:shop/components/cart_button.dart';
 import 'package:shop/components/custom_modal_bottom_sheet.dart';
 import 'package:shop/components/product/product_card.dart';
 import 'package:shop/constants.dart';
-import 'package:shop/screens/product/views/product_returns_screen.dart';
-
+import 'package:shop/models/product_siswa_model.dart';
 import 'package:shop/route/screen_export.dart';
 
 import 'components/notify_me_card.dart';
@@ -17,31 +16,26 @@ import '../../../components/review_card.dart';
 import 'product_buy_now_screen.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key, this.isProductAvailable = true});
+  const ProductDetailsScreen({
+    super.key,
+    required this.product,
+  });
 
-  final bool isProductAvailable;
+  final ProductSiswaModel product;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: isProductAvailable
-          ? CartButton(
-              price: 140,
-              press: () {
-                customModalBottomSheet(
-                  context,
-                  height: MediaQuery.of(context).size.height * 0.92,
-                  child: const ProductBuyNowScreen(),
-                );
-              },
-            )
-          :
-
-          /// If profuct is not available then show [NotifyMeCard]
-          NotifyMeCard(
-              isNotify: false,
-              onChanged: (value) {},
-            ),
+      bottomNavigationBar: CartButton(
+        price: product.priceAfetDiscount > 0 ? product.priceAfetDiscount : product.price,
+        press: () {
+          customModalBottomSheet(
+            context,
+            height: MediaQuery.of(context).size.height * 0.92,
+            child: const ProductBuyNowScreen(),
+          );
+        },
+      ),
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
@@ -51,20 +45,19 @@ class ProductDetailsScreen extends StatelessWidget {
               actions: [
                 IconButton(
                   onPressed: () {},
-                  icon: SvgPicture.asset("assets/icons/Bookmark.svg",
-                      color: Theme.of(context).textTheme.bodyLarge!.color),
+                  icon: SvgPicture.asset(
+                    "assets/icons/Bookmark.svg",
+                    color: Theme.of(context).textTheme.bodyLarge!.color,
+                  ),
                 ),
               ],
             ),
-            const ProductImages(
-              images: [productDemoImg1],
-            ),
+            ProductImages(images: product.imageList.isNotEmpty ? product.imageList : [product.image]),
             ProductInfo(
-              brand: "Pendidikan",
-              title: "Kotak Pensil Kayu",
-              isAvailable: isProductAvailable,
-              description:
-                  "Dibuat dengan Kayu yang ringan dan tidak mengandung bahan-bahan yang tidak aman untuk anak-anak..",
+              brand: product.brandName,
+              title: product.title,
+              isAvailable: true,
+              description: product.description,
               rating: 4.4,
               numOfReviews: 126,
             ),
@@ -76,7 +69,8 @@ class ProductDetailsScreen extends StatelessWidget {
                   context,
                   height: MediaQuery.of(context).size.height * 0.92,
                   child: const BuyFullKit(
-                      images: ["assets/screens/Product detail.png"]),
+                    images: ["assets/screens/Product detail.png"],
+                  ),
                 );
               },
             ),
@@ -101,7 +95,9 @@ class ProductDetailsScreen extends StatelessWidget {
                 customModalBottomSheet(
                   context,
                   height: MediaQuery.of(context).size.height * 0.92,
-                  child: const ProductReturnsScreen(),
+                  child: const BuyFullKit(
+                    images: ["assets/screens/Returns.png"],
+                  ),
                 );
               },
             ),
@@ -144,15 +140,17 @@ class ProductDetailsScreen extends StatelessWidget {
                   itemCount: 5,
                   itemBuilder: (context, index) => Padding(
                     padding: EdgeInsets.only(
-                        left: defaultPadding,
-                        right: index == 4 ? defaultPadding : 0),
+                      left: defaultPadding,
+                      right: index == 4 ? defaultPadding : 0,
+                    ),
                     child: ProductCard(
-                      image: productDemoImg2,
-                      title: "Bingkai Rotan",
-                      brandName: "Kerajinan",
-                      price: 24.65,
-                      priceAfetDiscount: index.isEven ? 20.99 : null,
-                      dicountpercent: index.isEven ? 25 : null,
+                      image: product.image,
+                      title: product.title,
+                      brandName: product.brandName,
+                      price: product.price,
+                      priceAfetDiscount:
+                          index.isEven ? product.priceAfetDiscount : null,
+                      dicountpercent: index.isEven ? product.discount : null,
                       press: () {},
                     ),
                   ),
@@ -161,7 +159,7 @@ class ProductDetailsScreen extends StatelessWidget {
             ),
             const SliverToBoxAdapter(
               child: SizedBox(height: defaultPadding),
-            )
+            ),
           ],
         ),
       ),

@@ -65,7 +65,7 @@ Future<void> fetchProductSiswa() async {
               ? const Center(child: CircularProgressIndicator())
               : ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: products.length,
+                  itemCount: products.length, 
                   itemBuilder: (context, index) {
                     final item = products[index];
                     return Padding(
@@ -86,6 +86,7 @@ Future<void> fetchProductSiswa() async {
                                   productDetailsScreenRoute,
                                   arguments: item,
                                 );
+
                               },
                             ),
 

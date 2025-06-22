@@ -121,7 +121,7 @@ class ProductCard extends StatelessWidget {
                                 fontSize: 9,
                               ),
                             ),
-                            const SizedBox(width: defaultPadding / 4),
+                            const SizedBox(width: defaultPadding / 2),
                             Text(
                               "Rp${price.toStringAsFixed(0)}",
                               style: TextStyle(
