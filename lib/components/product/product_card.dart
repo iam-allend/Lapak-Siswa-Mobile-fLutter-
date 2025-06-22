@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import '../../constants.dart';
-import '../network_image_with_loader.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -14,6 +12,7 @@ class ProductCard extends StatelessWidget {
     this.dicountpercent,
     required this.press,
   });
+
   final String image, brandName, title;
   final double price;
   final double? priceAfetDiscount;
@@ -25,17 +24,40 @@ class ProductCard extends StatelessWidget {
     return OutlinedButton(
       onPressed: press,
       style: OutlinedButton.styleFrom(
-          minimumSize: const Size(140, 220),
-          maximumSize: const Size(140, 220),
-          padding: const EdgeInsets.all(8)),
+        minimumSize: const Size(140, 220),
+        maximumSize: const Size(140, 220),
+        padding: const EdgeInsets.all(8),
+      ),
       child: Column(
         children: [
           AspectRatio(
             aspectRatio: 1.15,
             child: Stack(
               children: [
-                NetworkImageWithLoader(image, radius: defaultBorderRadious),
-                if (dicountpercent != null)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(defaultBorderRadious),
+                  child: Container(
+                    color: Colors.grey[200],
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      clipBehavior: Clip.hardEdge,
+                      child: Image.network(
+                        image,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(Icons.broken_image);
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                if (dicountpercent != null && dicountpercent! > 0)
                   Positioned(
                     right: defaultPadding / 2,
                     top: defaultPadding / 2,
@@ -45,15 +67,16 @@ class ProductCard extends StatelessWidget {
                       height: 16,
                       decoration: const BoxDecoration(
                         color: errorColor,
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(defaultBorderRadious)),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(defaultBorderRadious)),
                       ),
                       child: Text(
                         "$dicountpercent% off",
                         style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500),
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   )
@@ -63,7 +86,9 @@ class ProductCard extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: defaultPadding / 2, vertical: defaultPadding / 2),
+                horizontal: defaultPadding / 2,
+                vertical: defaultPadding / 2,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -85,20 +110,20 @@ class ProductCard extends StatelessWidget {
                         .copyWith(fontSize: 12),
                   ),
                   const Spacer(),
-                  priceAfetDiscount != null
+                  priceAfetDiscount != null && priceAfetDiscount! > 0
                       ? Row(
                           children: [
                             Text(
-                              "\$$priceAfetDiscount",
+                              "Rp${priceAfetDiscount!.toStringAsFixed(0)}",
                               style: const TextStyle(
                                 color: Color(0xFF31B0D8),
                                 fontWeight: FontWeight.w500,
-                                fontSize: 12,
+                                fontSize: 9,
                               ),
                             ),
                             const SizedBox(width: defaultPadding / 4),
                             Text(
-                              "\$$price",
+                              "Rp${price.toStringAsFixed(0)}",
                               style: TextStyle(
                                 color: Theme.of(context)
                                     .textTheme
@@ -111,7 +136,7 @@ class ProductCard extends StatelessWidget {
                           ],
                         )
                       : Text(
-                          "\$$price",
+                          "Rp${price.toStringAsFixed(0)}",
                           style: const TextStyle(
                             color: Color(0xFF31B0D8),
                             fontWeight: FontWeight.w500,

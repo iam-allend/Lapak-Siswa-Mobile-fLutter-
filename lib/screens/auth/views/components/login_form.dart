@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:shop/route/route_constants.dart'; // pastikan ini ada di atas
 import '../../../../models/customer_model.dart';
 import '../../../../service/api_service.dart';
 import '../../../home/views/home_screen.dart';
@@ -40,10 +40,12 @@ class _LogInFormState extends State<LogInForm> {
       await prefs.setString('address', user.address ?? '');
       await prefs.setString('phone', user.phone ?? '');
 
-      Navigator.pushReplacement(
+      Navigator.pushNamedAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        entryPointScreenRoute,
+        (route) => false,
       );
+
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Login gagal. Periksa username dan password.")),

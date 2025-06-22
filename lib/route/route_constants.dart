@@ -60,10 +60,8 @@ const String thanksForOrderScreenRoute = "thanks_order";
 // ✅ Tambahkan ini untuk ProfileViewScreen&ProfileEditScreen
 const String profileViewScreenRoute = "profile_view_screen";
 const String profileEditScreenRoute = "profile_edit"; // ✅ Tambahkan ini
-
 // ✅ Tambahkan ini untuk OrderScreen
 const String orderScreenRoute = "order_screen";
-
 // ✅ Tambahkan ini untuk Order Deliveries
 const String deliveredOrdersScreenRoute = "delivered_orders";
 

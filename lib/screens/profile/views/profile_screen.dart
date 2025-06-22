@@ -5,12 +5,33 @@ import 'package:shop/components/network_image_with_loader.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/route/router.dart';
 import 'package:shop/route/screen_export.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/profile_card.dart';
 import 'components/profile_menu_item_list_tile.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  String email = 'Memuat...';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadEmail();
+  }
+
+  Future<void> _loadEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      email = prefs.getString('email') ?? 'Email tidak ditemukan';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,27 +40,25 @@ class ProfileScreen extends StatelessWidget {
         children: [
           ProfileCard(
             name: "Sepide",
-            email: "theflutterway@gmail.com",
+            email: email,
             imageSrc: "https://i.imgur.com/IXnwbLk.png",
-            // proLableText: "Sliver",
-            // isPro: true, if the user is pro
             press: () {
               Navigator.pushNamed(context, profileViewScreenRoute);
             },
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding * 1.5),
+              horizontal: defaultPadding,
+              vertical: defaultPadding * 1.5,
+            ),
             child: GestureDetector(
               onTap: () {},
               child: const AspectRatio(
                 aspectRatio: 1.8,
-                child:
-                    NetworkImageWithLoader("https://i.imgur.com/dz0BBom.png"),
+                child: NetworkImageWithLoader("https://i.imgur.com/dz0BBom.png"),
               ),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
             child: Text(
@@ -89,7 +108,9 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: defaultPadding),
           Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding / 2),
+              horizontal: defaultPadding,
+              vertical: defaultPadding / 2,
+            ),
             child: Text(
               "Personalization",
               style: Theme.of(context).textTheme.titleSmall,
@@ -113,7 +134,9 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: defaultPadding),
           Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding / 2),
+              horizontal: defaultPadding,
+              vertical: defaultPadding / 2,
+            ),
             child: Text(
               "Settings",
               style: Theme.of(context).textTheme.titleSmall,
@@ -134,7 +157,9 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: defaultPadding),
           Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding / 2),
+              horizontal: defaultPadding,
+              vertical: defaultPadding / 2,
+            ),
             child: Text(
               "Help & Support",
               style: Theme.of(context).textTheme.titleSmall,
@@ -154,8 +179,6 @@ class ProfileScreen extends StatelessWidget {
             isShowDivider: false,
           ),
           const SizedBox(height: defaultPadding),
-
-          // Log Out
           ListTile(
             onTap: () {},
             minLeadingWidth: 24,

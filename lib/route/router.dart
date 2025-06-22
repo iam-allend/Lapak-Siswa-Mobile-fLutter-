@@ -8,6 +8,7 @@ import 'package:shop/screens/profile/views/profile_view_screen.dart';
 import 'package:shop/screens/order/views/orders_screen.dart';
 import 'package:shop/screens/order/views/order_delivered_screen.dart';
 import 'package:shop/screens/order/views/wishlist_screen.dart';
+import 'package:shop/screens/splash/views/splash_screen.dart';
 import 'screen_export.dart';
 import 'package:shop/screens/payment/views/payment_screen.dart';
 
@@ -22,6 +23,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case onbordingScreenRoute:
       return MaterialPageRoute(builder: (context) => const OnBordingScreen());
+      return MaterialPageRoute(
+        builder: (context) => const OnBordingScreen(),
+      );
+    // case preferredLanuageScreenRoute:
+    //   return MaterialPageRoute(
+    //     builder: (context) => const PreferredLanguageScreen(),
+    //   );
+    
+    case '/':
+    return MaterialPageRoute(builder: (_) => const SplashScreen());
     case logInScreenRoute:
       return MaterialPageRoute(builder: (context) => const LoginScreen());
     case signUpScreenRoute:
