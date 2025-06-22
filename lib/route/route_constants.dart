@@ -66,3 +66,6 @@ const String orderScreenRoute = "order_screen";
 
 // ✅ Tambahkan ini untuk Order Deliveries
 const String deliveredOrdersScreenRoute = "delivered_orders";
+
+// ✅ Tambahkan ini untuk WishlistScreen
+const String wishlistScreenRoute = "wishlist";
