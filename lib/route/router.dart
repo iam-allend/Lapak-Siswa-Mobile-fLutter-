@@ -39,6 +39,7 @@ const String profileEditScreenRoute = "profile_edit";
 const String orderScreenRoute = "order_screen";
 const String wishlistScreenRoute = "wishlist";
 const String userInfoScreenRoute = "user_info";
+const notificationsScreenRoute = 'notifications';
 const String paymentScreenRoute = "payment_screen";
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -122,6 +123,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const SelectLanguageScreen());
     case 'category_screen':
       return MaterialPageRoute(builder: (_) => const CategoryScreen());
+      case notificationsScreenRoute:
+  return MaterialPageRoute(builder: (_) => const NotificationsScreen());
     default:
       return MaterialPageRoute(builder: (_) => const OnBordingScreen());
   }

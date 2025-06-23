@@ -7,118 +7,61 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Shoplon"),
-        actions: const [
-          Icon(Icons.search),
-          SizedBox(width: 16),
-          Icon(Icons.notifications_none),
-          SizedBox(width: 16),
-        ],
+        title: const Text('Review your order'),
       ),
-      body: ListView(
+      body: Padding(
         padding: const EdgeInsets.all(16),
-        children: [
-          const Text(
-            "Review your order",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 12),
-          _cartItem(
-            image: "https://i.imgur.com/XSHo3UK.png",
-            title: "Mountain Warehouse for Women",
-            brand: "LIPSY LONDON",
-            price: "\$420",
-            oldPrice: "\$540",
-          ),
-          _cartItem(
-            image: "https://i.imgur.com/DZlYdhR.png",
-            title: "Mountain Beta Warehouse",
-            brand: "LIPSY LONDON",
-            price: "\$800",
-          ),
-          _cartItem(
-            image: "https://i.imgur.com/tL3b5sZ.png",
-            title: "FS – Nike Air Max 270 Really React",
-            brand: "LIPSY LONDON",
-            price: "\$390.36",
-            oldPrice: "\$650.62",
-          ),
-          const SizedBox(height: 24),
-          const Text(
-            "Your Coupon code",
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            decoration: InputDecoration(
-              hintText: "Type coupon code",
-              prefixIcon: const Icon(Icons.confirmation_num_outlined),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
-              ),
-              fillColor: Colors.grey.shade200,
-              filled: true,
-            ),
-          ),
-          const SizedBox(height: 24),
-          _orderSummary(),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.grid_view_outlined), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark_border), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: 'Cart'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: ''),
-        ],
-        selectedItemColor: Colors.deepPurple,
-        unselectedItemColor: Colors.black54,
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) {},
-      ),
-    );
-  }
-
-  Widget _cartItem({
-    required String image,
-    required String title,
-    required String brand,
-    required String price,
-    String? oldPrice,
-  }) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 6),
-      child: ListTile(
-        leading: Image.network(image, width: 56, height: 56, fit: BoxFit.cover),
-        title: Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(brand,
-                style: const TextStyle(fontSize: 12, color: Colors.grey)),
-            const SizedBox(height: 4),
-            Text(title,
-                style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14)),
-            const SizedBox(height: 4),
-            Row(
-              children: [
-                Text(price,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.teal)),
-                if (oldPrice != null) ...[
-                  const SizedBox(width: 6),
-                  Text(
-                    oldPrice,
-                    style: const TextStyle(
-                      color: Colors.grey,
-                      decoration: TextDecoration.lineThrough,
-                      fontSize: 12,
-                    ),
+            _buildProductItem(
+              imageUrl: 'assets/images/MaskerWajahAlami.png',
+              title: 'Masker Wajah Alami',
+              price: '\$100',             
+            ),
+            _buildProductItem(
+              imageUrl: 'assets/images/SabunAromaterapi.png',
+              title: 'Sabun Aromaterapi',
+              price: '\$390.36',
+              oldPrice: '\$650.62',
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Your Coupon code',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Type coupon code',
+                prefixIcon: Icon(Icons.card_giftcard_outlined),
+                filled: true,
+                fillColor: Colors.grey.shade200,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            _buildOrderSummary(),
+            const Spacer(),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                ],
-              ],
+                ),
+                child: const Text(
+                  'Continue',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
             ),
           ],
         ),
@@ -126,7 +69,49 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _orderSummary() {
+  Widget _buildProductItem({
+    required String imageUrl,
+    required String title,
+    required String price,
+    String? oldPrice,
+  }) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      margin: const EdgeInsets.only(bottom: 12),
+      child: ListTile(
+        contentPadding: const EdgeInsets.all(8),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.asset(imageUrl, width: 60, height: 60, fit: BoxFit.cover),
+        ),
+        title: Text(title, style: const TextStyle(fontSize: 14)),
+        subtitle: Row(
+          children: [
+            Text(
+              price,
+              style: const TextStyle(
+                color: Colors.cyan,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            if (oldPrice != null) ...[
+              const SizedBox(width: 8),
+              Text(
+                oldPrice,
+                style: const TextStyle(
+                  decoration: TextDecoration.lineThrough,
+                  color: Colors.grey,
+                  fontSize: 12,
+                ),
+              ),
+            ]
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOrderSummary() {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -136,15 +121,17 @@ class CartScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          Text("Order Summary",
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          SizedBox(height: 12),
-          _summaryRow(label: "Subtotal", value: "\$169"),
-          _summaryRow(label: "Shipping Fee", value: "Free", valueColor: Colors.green),
-          _summaryRow(label: "Discount", value: "\$10"),
-          Divider(),
-          _summaryRow(label: "Total (Include of VAT)", value: "\$185"),
-          _summaryRow(label: "Estimated VAT", value: "\$5"),
+          Text(
+            'Order Summary',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 10),
+          _summaryRow('Subtotal', '\$169'),
+          _summaryRow('Shipping Fee', 'Free', isHighlighted: true),
+          _summaryRow('Discount', '\$10'),
+          Divider(height: 24),
+          _summaryRow('Total (Include of VAT)', '\$185', isBold: true),
+          _summaryRow('Estimated VAT', '\$5'),
         ],
       ),
     );
@@ -152,32 +139,32 @@ class CartScreen extends StatelessWidget {
 }
 
 class _summaryRow extends StatelessWidget {
-  const _summaryRow({
-    required this.label,
-    required this.value,
-    this.valueColor,
-  });
-
   final String label;
   final String value;
-  final Color? valueColor;
+  final bool isHighlighted;
+  final bool isBold;
+
+  const _summaryRow(this.label, this.value, {
+    this.isHighlighted = false,
+    this.isBold = false,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(fontSize: 14)),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: valueColor ?? Colors.black,
-            ),
-          ),
+          Text(label, style: TextStyle(
+            fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+            color: isHighlighted ? Colors.green : null,
+          )),
+          Text(value, style: TextStyle(
+            fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+            color: isHighlighted ? Colors.green : null,
+          )),
         ],
       ),
     );
