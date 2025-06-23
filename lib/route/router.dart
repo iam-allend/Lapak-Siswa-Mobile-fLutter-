@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shop/entry_point.dart';
+import 'package:shop/screens/address/views/add_new_address_screen.dart';
 import 'package:shop/screens/order/views/order_detail_screen.dart';
+import 'package:shop/screens/order/views/wishlist_screen.dart';
+import 'package:shop/screens/preferences/views/select_language_screen.dart';
+import 'package:shop/screens/product/views/category_screen.dart';
 
 import 'package:shop/screens/profile/views/profile_edit_screen.dart'; // Tambahan import
 import 'package:shop/screens/profile/views/profile_view_screen.dart';
@@ -14,14 +18,11 @@ import 'package:shop/screens/payment/views/payment_screen.dart';
 
 import 'screen_export.dart';
 
-<<<<<<< HEAD
 const String profileEditScreenRoute = "profile_edit";
 const String orderScreenRoute = "order_screen";
 const String wishlistScreenRoute = "wishlist";
 const String userInfoScreenRoute = "user_info";
 const notificationsScreenRoute = 'notifications';
-=======
->>>>>>> bb1a4504e859538537b82ec2a1773c15ef236374
 const String paymentScreenRoute = "payment_screen";
 
 // Yuo will get 50+ screens and more once you have the full template
@@ -347,7 +348,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     // ✅ Tambahkan ini untuk Order Deliveries
     case deliveredOrdersScreenRoute:
-<<<<<<< HEAD
       return MaterialPageRoute(builder: (_) => const OrderDeliveredScreen());
     case wishlistScreenRoute:
       return MaterialPageRoute(builder: (_) => const WishlistScreen());
@@ -361,7 +361,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const CategoryScreen());
       case notificationsScreenRoute:
   return MaterialPageRoute(builder: (_) => const NotificationsScreen());
-=======
   return MaterialPageRoute(
     builder: (context) => const OrderDeliveredScreen(),
   );
@@ -378,7 +377,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(
     //     builder: (context) => const ThanksForOrderScreen(),
     //   );
->>>>>>> bb1a4504e859538537b82ec2a1773c15ef236374
     default:
       return MaterialPageRoute(
         // Make a screen for undefine
