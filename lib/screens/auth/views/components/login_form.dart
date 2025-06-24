@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shop/route/route_constants.dart'; // pastikan ini ada di atas
+import 'package:shop/route/route_constants.dart';
+import 'package:shop/helpers/user_session.dart';
+import 'package:shop/service/api_service.dart';
 import '../../../../models/customer_model.dart';
-import '../../../../service/api_service.dart';
-import '../../../home/views/home_screen.dart';
 
 class LogInForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -30,22 +29,13 @@ class _LogInFormState extends State<LogInForm> {
     );
 
     if (user != null) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('is_logged_in', true);
-      await prefs.setInt('id', user.id);
-      await prefs.setString('name', user.fullName);
-      await prefs.setString('username', user.username);
-      await prefs.setString('email', user.email);
-      await prefs.setString('image', user.imageUrl ?? '');
-      await prefs.setString('address', user.address ?? '');
-      await prefs.setString('phone', user.phone ?? '');
+      await UserSession.setLoggedInUser(user); // ✅ Gunakan helper ini
 
       Navigator.pushNamedAndRemoveUntil(
         context,
         entryPointScreenRoute,
         (route) => false,
       );
-
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Login gagal. Periksa username dan password.")),

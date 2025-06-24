@@ -3,12 +3,40 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/components/network_image_with_loader.dart';
 import 'package:shop/route/screen_export.dart'; // pastikan file ini sudah punya route profileEditScreenRoute
+import 'package:shop/models/customer_model.dart';
+import 'package:shop/helpers/user_session.dart';
 
-class ProfileViewScreen extends StatelessWidget {
+class ProfileViewScreen extends StatefulWidget {
   const ProfileViewScreen({super.key});
 
   @override
+  State<ProfileViewScreen> createState() => _ProfileViewScreenState();
+}
+
+class _ProfileViewScreenState extends State<ProfileViewScreen> {
+  CustomerModel? user;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUser();
+  }
+
+  Future<void> loadUser() async {
+    final u = await UserSession.getLoggedInUser();
+    setState(() {
+      user = u;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (user == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile Info"),
@@ -40,24 +68,27 @@ class ProfileViewScreen extends StatelessWidget {
             Center(
               child: CircleAvatar(
                 radius: 50,
-                child: NetworkImageWithLoader(
-                  "https://i.imgur.com/IXnwbLk.png",
-                  radius: 100,
+                backgroundColor: Colors.grey[200],
+                child: ClipOval(
+                  child: NetworkImageWithLoader(
+                    "https://allend.site/lapak-siswa/img_user/${user!.imageUrl}",
+                    radius: 100,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: defaultPadding),
-            const Text(
-              "Sepide",
-              style: TextStyle(
+            Text(
+              user!.fullName,
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 4),
-            const Text(
-              "theflutterway@gmail.com",
-              style: TextStyle(
+            Text(
+              user!.email,
+              style: const TextStyle(
                 fontSize: 14,
                 color: Colors.grey,
               ),
@@ -80,7 +111,8 @@ class ProfileViewScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: SvgPicture.asset("assets/icons/Location.svg", height: 24),
+              leading:
+                  SvgPicture.asset("assets/icons/Location.svg", height: 24),
               title: const Text("Addresses"),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {

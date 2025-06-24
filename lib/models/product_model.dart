@@ -20,7 +20,7 @@ class ProductModel {
 List<ProductModel> demoPopularProducts = [
   ProductModel(
     image: productDemoImg1,
-    title: "Kotak Pensil Kayu",
+    title: "Kotak Pensil Kayu1",
     brandName: "Alat Sekolah",
     price: 540,
     priceAfetDiscount: 420,

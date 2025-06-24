@@ -30,6 +30,8 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^4.0.0
+  image_picker: ^1.0.4 # pastikan versi ini atau terbaru
+
 
 flutter:
   uses-material-design: true

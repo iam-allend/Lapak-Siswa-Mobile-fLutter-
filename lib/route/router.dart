@@ -8,7 +8,7 @@ import 'package:shop/screens/product/views/category_screen.dart';
 
 import 'package:shop/screens/profile/views/profile_edit_screen.dart'; // Tambahan import
 import 'package:shop/screens/profile/views/profile_view_screen.dart';
-import 'package:shop/screens/order/views/orders_screen.dart';
+import 'package:shop/screens/order/orders_screen.dart';
 import 'package:shop/screens/order/views/order_delivered_screen.dart';
 import 'package:shop/screens/splash/views/splash_screen.dart';
 import 'package:shop/models/product_siswa_model.dart';
@@ -275,9 +275,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //     builder: (context) => const AddNewAddressScreen(),
     //   );
     case ordersScreenRoute:
-    return MaterialPageRoute(
-    builder: (context) => const OrderScreen(), // ← ini halaman yang kamu buat
-    );
+      return MaterialPageRoute(
+        builder: (context) => const OrdersScreen(), // ✅ ini sesuai nama class yang sudah kamu buat
+      );
+
+
+
 
     // case orderProcessingScreenRoute:
     //   return MaterialPageRoute(

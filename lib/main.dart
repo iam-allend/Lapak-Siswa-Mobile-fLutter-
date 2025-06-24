@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop/route/route_constants.dart';
 import 'package:shop/route/router.dart' as router;
 import 'package:shop/theme/app_theme.dart';
+import 'package:shop/screens/wallet/deposit/deposit_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,20 +18,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Lapak Siswa',
-      theme: AppTheme.lightTheme(context),
-      // Dark theme is inclided in the Full template
-      themeMode: ThemeMode.light,
-      onGenerateRoute: router.generateRoute,
-      initialRoute: '/',
-
-      
-    );
-
-    
+        debugShowCheckedModeBanner: false,
+        title: 'Lapak Siswa',
+        theme: AppTheme.lightTheme(context),
+        // Dark theme is inclided in the Full template
+        themeMode: ThemeMode.light,
+        onGenerateRoute: router.generateRoute,
+        initialRoute: '/',
+        routes: {
+          '/deposit': (context) => const DepositScreen(),
+        });
   }
-
-
-  
 }

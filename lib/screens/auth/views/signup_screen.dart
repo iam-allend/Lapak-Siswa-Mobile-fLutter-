@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:shop/screens/auth/views/components/sign_up_form.dart';
 import 'package:shop/route/route_constants.dart';
-
 import '../../../constants.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -14,6 +14,42 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  bool isLoading = false;
+  bool agreeTerms = false;
+
+  Future<void> register() async {
+    if (!_formKey.currentState!.validate() || !agreeTerms) return;
+
+    setState(() => isLoading = true);
+
+    final url = Uri.parse("https://allend.site/lapak-siswa/API/register.php");
+    final response = await http.post(url, body: {
+      "name": nameController.text,
+      "username": usernameController.text,
+      "email": emailController.text,
+      "password": passwordController.text,
+    });
+
+    final data = jsonDecode(response.body);
+    setState(() => isLoading = false);
+
+    if (data['success'] == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(data['message'] ?? 'Registrasi berhasil!')),
+      );
+      Navigator.pushReplacementNamed(context, logInScreenRoute);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(data['message'] ?? 'Registrasi gagal!')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +73,45 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(height: defaultPadding / 2),
-                  const Text(
-                    "Buat.",
-                  ),
+                  const Text("Buat."),
                   const SizedBox(height: defaultPadding),
-                  SignUpForm(formKey: _formKey),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: nameController,
+                          decoration: const InputDecoration(labelText: "Nama Lengkap"),
+                          validator: (value) => value!.isEmpty ? 'Wajib diisi' : null,
+                        ),
+                        const SizedBox(height: defaultPadding),
+                        TextFormField(
+                          controller: usernameController,
+                          decoration: const InputDecoration(labelText: "Username"),
+                          validator: (value) => value!.isEmpty ? 'Wajib diisi' : null,
+                        ),
+                        const SizedBox(height: defaultPadding),
+                        TextFormField(
+                          controller: emailController,
+                          decoration: const InputDecoration(labelText: "Email"),
+                          validator: (value) => value!.isEmpty ? 'Wajib diisi' : null,
+                        ),
+                        const SizedBox(height: defaultPadding),
+                        TextFormField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: const InputDecoration(labelText: "Password"),
+                          validator: (value) => value!.length < 6 ? 'Minimal 6 karakter' : null,
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: defaultPadding),
                   Row(
                     children: [
                       Checkbox(
-                        onChanged: (value) {},
-                        value: false,
+                        onChanged: (value) => setState(() => agreeTerms = value ?? false),
+                        value: agreeTerms,
                       ),
                       Expanded(
                         child: Text.rich(
@@ -76,15 +140,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ],
                   ),
                   const SizedBox(height: defaultPadding * 2),
-                  ElevatedButton(
-                    onPressed: () {
-                      // There is 2 more screens while user complete their profile
-                      // afre sign up, it's available on the pro version get it now
-                      // 🔗 https://theflutterway.gumroad.com/l/fluttershop
-                      Navigator.pushNamed(context, entryPointScreenRoute);
-                    },
-                    child: const Text("Continue"),
-                  ),
+                  isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : ElevatedButton(
+                          onPressed: register,
+                          child: const Text("Continue"),
+                        ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

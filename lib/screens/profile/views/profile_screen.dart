@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:shop/components/list_tile/divider_list_tile.dart';
-import 'package:shop/components/network_image_with_loader.dart';
-import 'package:shop/constants.dart';
-import 'package:shop/route/router.dart';
-import 'package:shop/route/screen_export.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:shop/components/list_tile/divider_list_tile.dart';
+import 'package:shop/constants.dart';
+import 'package:shop/helpers/user_session.dart';
+import 'package:shop/models/customer_model.dart';
 import 'components/profile_card.dart';
 import 'components/profile_menu_item_list_tile.dart';
+import 'package:shop/route/router.dart';
+import 'package:shop/route/screen_export.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -16,36 +16,37 @@ class ProfileScreen extends StatefulWidget {
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
-
 class _ProfileScreenState extends State<ProfileScreen> {
-  String email = 'Memuat...';
+  CustomerModel? user;
 
   @override
   void initState() {
     super.initState();
-    _loadEmail();
+    loadUser();
   }
 
-  Future<void> _loadEmail() async {
-    final prefs = await SharedPreferences.getInstance();
+  Future<void> loadUser() async {
+    final currentUser = await UserSession.getLoggedInUser();
     setState(() {
-      email = prefs.getString('email') ?? 'Email tidak ditemukan';
+      user = currentUser;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          ProfileCard(
-            name: "Sepide",
-            email: email,
-            imageSrc: "https://i.imgur.com/IXnwbLk.png",
-            press: () {
-              Navigator.pushNamed(context, profileViewScreenRoute);
-            },
-          ),
+      body: user == null
+          ? const Center(child: CircularProgressIndicator())
+          : ListView(
+              children: [
+                 ProfileCard(
+                  name: user!.fullName,
+                  email: user!.email,
+                  imageSrc: "https://allend.site/lapak-siswa/img_user/${user!.imageUrl}",
+                  press: () {
+                    Navigator.pushNamed(context, profileViewScreenRoute);
+                  },
+                ),
           // Padding(
           //   padding: const EdgeInsets.symmetric(
           //     horizontal: defaultPadding,
@@ -180,7 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const SizedBox(height: defaultPadding),
           ListTile(
-            onTap: () {},
+            onTap: logout,
             minLeadingWidth: 24,
             leading: SvgPicture.asset(
               "assets/icons/Logout.svg",
@@ -199,5 +200,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> logout() async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Konfirmasi"),
+        content: const Text("Yakin ingin keluar?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text("Batal"),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text("Keluar"),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.clear();
+      if (!mounted) return;
+      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+    }
   }
 }

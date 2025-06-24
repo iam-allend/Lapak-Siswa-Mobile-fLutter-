@@ -67,8 +67,8 @@ class ProductCard extends StatelessWidget {
                       height: 16,
                       decoration: const BoxDecoration(
                         color: errorColor,
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(defaultBorderRadious)),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(defaultBorderRadious)),
                       ),
                       child: Text(
                         "$dicountpercent% off",
